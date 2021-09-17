@@ -28,7 +28,8 @@
     "react-toastify": "^7.0.3",
     "reactide-config": "^1.0.2",
     "recharts": "^2.0.4",
-    "tinycolor2": "^1.4.2"
+    "tinycolor2": "^1.4.2",
+    "axios":"^0.21.4"
   },
   "scripts": {
     "start": "react-scripts start",
