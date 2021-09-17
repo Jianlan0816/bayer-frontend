@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { Component } from 'react';
+import axios from 'axios';
+
 import {
   Grid,
   CircularProgress,
@@ -22,6 +25,8 @@ import bayer from "../../images/Bayer.jpeg"
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
 
+const data = axios.get('http://127.0.0.1:8000/api/user/').then(res => res.data);
+
 function Login(props) {
   var classes = useStyles();
 
@@ -33,15 +38,16 @@ function Login(props) {
   var [error, setError] = useState(null);
   var [activeTabId, setActiveTabId] = useState(0);
   var [nameValue, setNameValue] = useState("");
-  var [loginValue, setLoginValue] = useState("admin@gmail.com");
-  var [passwordValue, setPasswordValue] = useState("password");
-
+  var [loginValue, setLoginValue] = useState("yibo99@njit.edu");
+  var [passwordValue, setPasswordValue] = useState("12345");
+  
   return (
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
         <img src={bayer} alt="logo" className={classes.logotypeImage} />
         <Typography className={classes.logotypeText}>CKD Population Navigator</Typography>
       </div>
+
       <div className={classes.formContainer}>
         <div className={classes.form}>
           <Tabs

@@ -1,12 +1,38 @@
 import React from "react";
+import axios from 'axios';
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
+
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+const server = 'http://127.0.0.1:8000';
+
+// get data from api
+const data = axios.get('http://127.0.0.1:8000/api/user/').then(res => res.data);
+
+function checkLogin(login,password) {
+   for (let i = 0; i < data.length; i++) {
+     if (data[i].email == login && data[i].password==password){
+        login = "1";
+        password = "1";
+        break
+     }
+     else {
+       login = "";
+       password = "";
+     }
+  }
+  return login, password;
+}
+
 
 function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       return { ...state, isAuthenticated: true };
+    case "LOGIN_FAILURE":
+      return { ...state, isAuthenticated: false };
     case "SIGN_OUT_SUCCESS":
       return { ...state, isAuthenticated: false };
     default: {
@@ -52,20 +78,23 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
+  var login1, password1 = checkLogin(login,password);
 
-  if (!!login && !!password) {
+  if (!!login1 && !!password1) {
     setTimeout(() => {
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-
-      history.push('/app/tables')
+      localStorage.setItem('id_token', 1);
+      setError(null);
+      setIsLoading(false);
+      dispatch({ type: 'LOGIN_SUCCESS' });
+      history.push('/app/tables');
+      alert("alert")
     }, 2000);
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
     setIsLoading(false);
+    history.push("/login");
+    alert("login failure")
   }
 }
 
