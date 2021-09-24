@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Component } from 'react';
-import axios from 'axios';
 
 import {
   Grid,
@@ -25,7 +24,6 @@ import bayer from "../../images/Bayer.jpeg"
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
 
-const data = axios.get('http://127.0.0.1:8000/api/user/').then(res => res.data);
 
 function Login(props) {
   var classes = useStyles();
